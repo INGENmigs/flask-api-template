@@ -1,7 +1,7 @@
 from flask import Flask, request
 from flask.ext.restful import Resource, Api, marshal_with, fields, abort
 from flask_restful_swagger import swagger
-from flask_minimal.api import DummyEndpoint
+from flask_minimal.api import IndexEndpoint
 from flask_minimal.api import HelloEndpoint
 
 API_VERSION_NUMBER = '1.0'
@@ -24,7 +24,8 @@ class CustomFlaskApp(object):
         }
         self.api = swagger.docs(Api(self.app, errors=custom_errors), apiVersion=API_VERSION_NUMBER)
         
-        self.api.add_resource(DummyEndpoint, '/dummy', endpoint='dummy')
+        # These are how the endpoints are called
+        self.api.add_resource(IndexEndpoint, '/', endpoint='index')
         self.api.add_resource(HelloEndpoint, '/hello', endpoint='hello')
 
     def run(self, *args, **kwargs):

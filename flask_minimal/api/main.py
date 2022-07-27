@@ -1,21 +1,25 @@
 from flask import request
 from flask.ext.restful import Resource, Api, marshal_with, fields, abort
 from flask_restful_swagger import swagger
-from .models import DummyResult
+from .models import IndexResult
 from .models import HelloResult
 from .errors import JsonRequiredError
 from .errors import JsonInvalidError
 
-class DummyEndpoint(Resource):
-    @swagger.operation(
-        responseClass=DummyResult.__name__,
-        nickname='dummy')
-    @marshal_with(DummyResult.resource_fields)
-    def get(self):
-        """Return a DummyResult object
+""" Each Class is used to process the output of the endpoints """
 
-        Lightweight response to let us confirm that the server is on-line"""
-        return DummyResult()
+class IndexEndpoint(Resource):
+    @swagger.operation(
+        responseClass=IndexResult.__name__,
+        nickname='index')
+    @marshal_with(IndexResult.resource_fields)
+    def get(self):
+        return IndexResult()
+
+    # I'm not yet too sure what some of these functions do yet.
+    # But I assume @swagger calls the models
+    # @marshal_with is a decorator
+    # and OFC "def get()" is the GET Method
 
 
 class HelloEndpoint(Resource):
